@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ProductMapper">
+
+<!--    结果映射：ProductVO-->
+    <resultMap id="ProductVOMap" type="com.example.entity.ProductVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="main_image" property="mainImage"/>
+        <result column="shop_id" property="shopId"/>
+        <result column="shop_name" property="shopName"/>
+        <result column="audit_status" property="auditStatus"/>
+        <result column="audit_reason" property="auditReason"/>
+        <result column="submit_time" property="submitTime"/>
+        <result column="audit_time" property="auditTime"/>
+        <result column="min_price" property="minPrice"/>
+        <result column="max_price" property="maxPrice"/>
+        <result column="stock_sum" property="stockSum"/>
+    </resultMap>
+<!--    查询待审核商品列表(带价格范围)-->
+
+    <select id="selectAll" resultMap="ProductVOMap">
+       SELECT p.id,
+            p.name,
+            p.shop_id,
+            p.shop_name,
+            p.audit_status,
+            p.submit_time,
+            p.audit_time,
+            p.main_image,
+            MIN(s.price) as min_price,
+            MAX(s.price) as max_price,
+            SUM(s.stock) as stock_sum
+        FROM product p
+        LEFT JOIN sku s ON p.id = s.product_id
+        WHERE p.audit_status = 'approved'
+        GROUP BY p.id
+    </select>
+    <select id="selectRecycle" resultMap="ProductVOMap">
+        SELECT p.id,
+               p.name,
+               p.shop_id,
+               p.shop_name,
+               p.audit_status,
+               p.submit_time,
+               p.audit_time,
+               p.main_image,
+               MIN(s.price) as min_price,
+               MAX(s.price) as max_price,
+               SUM(s.stock) as stock_sum
+        FROM product p
+                 LEFT JOIN sku s ON p.id = s.product_id
+        WHERE p.status = '0'
+        GROUP BY p.id
+    </select>
+    <select id="selectByStatus" resultType="com.example.entity.ProductVO">
+        select p.id, p.name,p.main_image as mainImage,
+               p.shop_name as shopName,
+               p.audit_status as auditStatus,
+               p.audit_reason as auditReason,
+               p.submit_time as submitTime,
+               p.audit_time as auditTime,
+               MIN(s.price) as minPrice,
+               MAX(s.price) as maxPrice,
+               SUM(s.stock) as stockSum
+        from product p
+        left join sku s on p.id=s.product_id
+        where p.status=#{status}
+        GROUP BY p.id, p.name, p.main_image, p.shop_id, p.shop_name,
+                 p.audit_status, p.audit_reason, p.submit_time, p.audit_time
+        ORDER BY p.submit_time DESC
+    </select>
+    <update id="updateStatus" parameterType="com.example.entity.Product">
+        update product set audit_status=#{auditStatus},status=#{status},audit_time=NOW()  where id=#{id};
+    </update>
+    <update id="updateRejectReason" parameterType="com.example.entity.Product">
+        update product set reject_reason=#{reason} where id=#{id};
+    </update>
+    <delete id="deleteById" parameterType="int">
+        delete p,s from product p left join sku s on p.id=s.product_id where p.id=#{id}
+    </delete>
+    <delete id="batchDeleteByIds" parameterType="int">
+        delete p,s from product p left join sku s on p.id=s.product_id where p.id in (${ids})
+    </delete>
+</mapper>

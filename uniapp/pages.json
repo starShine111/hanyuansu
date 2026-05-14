@@ -1,0 +1,67 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "心悦小店"
+			}
+		},
+		{
+			"path": "pages/category/category",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/messages/messages",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/me/me",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/detail/detail",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {},
+	"tabBar": {
+		"backgroundColor": "white",
+		// "selectedColor": "#b0e0e6",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "/static/connection/home.png",
+				"selectedIconPath": "/static/connection/home-highlight.png"
+			},
+			{
+				"pagePath": "pages/category/category",
+				"iconPath": "/static/connection/category.png",
+				"selectedIconPath": "/static/connection/category-highlight.png"
+			},
+			{
+				"pagePath": "pages/messages/messages",
+				"iconPath": "/static/connection/messages.png",
+				"selectedIconPath": "/static/connection/messages-highlight.png"
+			},
+			{
+				"pagePath": "pages/me/me",
+				"iconPath": "/static/connection/me.png",
+				"selectedIconPath": "/static/connection/me-highlight.png"
+			}
+		]
+	}
+}

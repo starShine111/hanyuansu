@@ -1,0 +1,21 @@
+
+.sidebar-container{
+	display: flex;
+}
+.sidebar-menu{
+	width: 200rpx;
+	flex-shrink: 0;
+	background-color: white;
+	margin-right: 2px;
+}
+.main-content{
+	flex:1;
+	padding: 20rpx;
+	magin:20px
+}
+.product-include{
+	display: -webkit-box;
+	-webkit-box-orient:vertical;
+	-webkit-line-clamp:2;
+	overflow: hidden;
+}

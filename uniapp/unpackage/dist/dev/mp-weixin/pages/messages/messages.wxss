@@ -1,0 +1,17 @@
+
+.chat-item{
+	background-color: white;
+	border-radius: 5px;
+	margin: 10px;
+}
+.chat-content{
+	flex: 1;
+}
+.top-row,.bottom-row{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.mention-tag{
+	color:red;
+}
